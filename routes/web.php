@@ -12,7 +12,7 @@
 */
 
 // 微信
-Route::any('/serve', 'WeChatController@serve');
+Route::any('/wechat', 'WeChatController@serve');
 
 Route::get('/', function () {
     return view('welcome');

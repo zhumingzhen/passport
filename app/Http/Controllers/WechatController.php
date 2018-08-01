@@ -28,13 +28,7 @@ class WechatController extends Controller
         return $this->app->server->serve();
     }
 
-    public function aa()
-    {
-        $officialAccount = EasyWeChat::officialAccount(); // 公众号
-        dd($officialAccount);
-    }
-
-    public function bb()
+    public function userinfo()
     {
         $user = session('wechat.oauth_user'); // 拿到授权用户资料
         dd($user);

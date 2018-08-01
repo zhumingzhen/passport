@@ -14,16 +14,9 @@
 // 微信
 Route::any('/wechat', 'WechatController@serve');
 
-Route::any('/aa', 'WechatController@aa');
-Route::any('/bb', 'WechatController@bb');
-
 Route::group(['middleware' => ['web', 'wechat.oauth:snsapi_userinfo']], function () {
-    Route::get('/user', function () {
-        $user = session('wechat.oauth_user'); // 拿到授权用户资料
-        dd($user);
-    });
-
-    Route::any('/cc', 'WechatController@bb');
+    // 拿到用户信息
+    Route::get('/user', 'WechatController@bb');
 });
 
 Route::get('/', function () {

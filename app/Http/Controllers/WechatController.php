@@ -32,6 +32,6 @@ class WechatController extends Controller
     {
         $user = session('wechat.oauth_user'); // 拿到授权用户资料
 
-        return $user->original['openid'];
+        return $user['original']['openid'];
     }
 }

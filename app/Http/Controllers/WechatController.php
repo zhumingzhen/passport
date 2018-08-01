@@ -32,7 +32,7 @@ class WechatController extends Controller
     {
         $user = session('wechat.oauth_user'); // 拿到授权用户资料
 
-        echo $user;exit;
+        var_dump($user);exit;
 
         $userArrr = json_decode($user, true);
 

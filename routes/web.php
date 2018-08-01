@@ -23,10 +23,7 @@ Route::group(['middleware' => ['web', 'wechat.oauth:snsapi_userinfo']], function
         dd($user);
     });
 
-    Route::get('/cc', function () {
-        $user = session('wechat.oauth_user'); // 拿到授权用户资料
-        dd($user);
-    });
+    Route::any('/cc', 'WechatController@bb');
 });
 
 Route::get('/', function () {

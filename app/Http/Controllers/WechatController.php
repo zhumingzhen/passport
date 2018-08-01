@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use EasyWeChat;
 use Illuminate\Http\Request;
 
 class WechatController extends Controller
@@ -10,7 +11,8 @@ class WechatController extends Controller
 
   public function __construct()
   {
-      $this->app = app('wechat.official_account');
+//      $this->app = app('wechat.official_account');
+      $this->app = EasyWeChat::officialAccount(); // 公众号
   }
 
   /**
@@ -24,5 +26,11 @@ class WechatController extends Controller
             return "欢迎关注 itdream6@163.com！";
         });
         return $this->app->server->serve();
+    }
+
+    public function aa()
+    {
+        $officialAccount = EasyWeChat::officialAccount(); // 公众号
+        dd($officialAccount);
     }
 }

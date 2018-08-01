@@ -16,7 +16,7 @@ Route::any('/wechat', 'WechatController@serve');
 
 Route::group(['middleware' => ['web', 'wechat.oauth:snsapi_userinfo']], function () {
     // 拿到用户信息
-    Route::get('/user', 'WechatController@bb');
+    Route::get('/user', 'WechatController@userinfo');
 });
 
 Route::get('/', function () {

@@ -15,12 +15,11 @@
 Route::any('/wechat', 'WechatController@serve');
 
 Route::any('/aa', 'WechatController@aa');
+Route::any('/bb', 'WechatController@bb');
 
-Route::group(['middleware' => ['web', 'wechat.oauth']], function () {
+Route::group(['middleware' => ['web', 'wechat.oauth:snsapi_userinfo']], function () {
     Route::get('/user', function () {
         $user = session('wechat.oauth_user'); // 拿到授权用户资料
-
-        dd($user);
     });
 });
 

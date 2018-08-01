@@ -33,4 +33,9 @@ class WechatController extends Controller
         $officialAccount = EasyWeChat::officialAccount(); // 公众号
         dd($officialAccount);
     }
+
+    public function bb()
+    {
+        $user = session('wechat.oauth_user'); // 拿到授权用户资料
+    }
 }

@@ -20,7 +20,6 @@ class WechatController extends Controller
      */
     public function serve()
     {
-        dd(12121);
         $this->app->server->push(function($message){
             return "欢迎关注 itdream6@163.com！";
         });

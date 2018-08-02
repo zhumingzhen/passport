@@ -64,7 +64,9 @@ class WechatController extends Controller
                 // 重定向失败 可跳转到 404 页面
                 return '重定向到了自身，结束死循环。上一页地址：'.$_GET['redirect'].' ；当前页地址'.url()->current();
             }
-
+            $code = rand(100000,999999);
+            Redis::set($code,"woshicode");
+            Redis::expire($code, 300);
             return redirect($_GET['redirect'])->cookie('hello', 'hello, world', 86400, null, null, false, true);
         }
 

@@ -67,7 +67,7 @@ class WechatController extends Controller
             $code = rand(100000,999999);
             Redis::set($code,"woshicode");
             Redis::expire($code, 300);
-            return redirect($_GET['redirect'])->cookie('hello', 'hello, world', 86400, null, null, false, true);
+            return redirect($_GET['redirect'].'?code='.$code)->cookie('hello', 'hello, world', 86400, null, null, false, true);
         }
 
         $userArrr = json_decode($user, true);

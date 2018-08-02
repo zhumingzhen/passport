@@ -62,7 +62,7 @@ class WechatController extends Controller
             // 如果已存在当前 openid 信息，则跳转到来源页面
             if (url()->current() == url()->previous()){
                 // 重定向失败 可跳转到 404 页面
-                return '重定向到了自身，结束死循环';
+                return '重定向到了自身，结束死循环。上一页地址：'.url()->previous().'当前页地址'.url()->current();
             }
 
             return redirect(url()->previous())->cookie('hello', 'hello, world', 86400, null, null, false, true);

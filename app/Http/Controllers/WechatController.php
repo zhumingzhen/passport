@@ -73,14 +73,14 @@ class WechatController extends Controller
         return $userArrr['original']['openid'];   //
     }
 
-    public function q()
-    {
-        if (Cookie::get('refreshToken')) {
-            return '已登录';
-        }else{
-            return redirect('http://passport.test/usert');
-        }
-    }
+//    public function q()
+//    {
+//        if (Cookie::get('refreshToken')) {
+//            return '已登录';
+//        }else{
+//            return redirect('http://passport.test/usert');
+//        }
+//    }
 
     public function cookiess()
     {

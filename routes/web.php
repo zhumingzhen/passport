@@ -14,7 +14,7 @@
 // 微信
 Route::any('/wechat', 'WechatController@serve');
 
-Route::get('/q', 'WechatController@q');
+//Route::get('/q', 'WechatController@q');
 Route::get('/c', 'WechatController@cookiess');
 
 Route::get('/usert', 'WechatController@userinfo');

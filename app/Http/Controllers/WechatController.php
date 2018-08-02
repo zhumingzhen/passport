@@ -59,13 +59,13 @@ class WechatController extends Controller
             return view('login');
 
         }else {
-            // 如果已存在当前 openid 信息，则跳转到来源页面
-            if (url()->current() == url()->previous()){
+            // 如果已存在当前 openid 信息，则跳转到来源页面  url()->previous()
+            if (url()->current() == $_GET['redirect']){
                 // 重定向失败 可跳转到 404 页面
-                return '重定向到了自身，结束死循环。上一页地址：'.url()->previous().'当前页地址'.url()->current();
+                return '重定向到了自身，结束死循环。上一页地址：'.$_GET['redirect'].' ；当前页地址'.url()->current();
             }
 
-            return redirect(url()->previous())->cookie('hello', 'hello, world', 86400, null, null, false, true);
+            return redirect($_GET['redirect'])->cookie('hello', 'hello, world', 86400, null, null, false, true);
         }
 
         $userArrr = json_decode($user, true);

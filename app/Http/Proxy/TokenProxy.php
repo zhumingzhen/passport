@@ -53,7 +53,7 @@ class TokenProxy
         if ($response->getStatusCode() != 401){
             $token = json_decode((string) $response->getBody(), true);
 
-            return $token;
+            return json_encode($token);
             /**
             return response()->json([
             'access_token' => $token['access_token'],

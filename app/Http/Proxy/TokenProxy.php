@@ -53,14 +53,14 @@ class TokenProxy
         if ($response->getStatusCode() != 401){
             $token = json_decode((string) $response->getBody(), true);
 
-            return response()->json([
-                'access_token' => $token['access_token'],
-                'refresh_token' => $token['refresh_token'],
-                'expires_in' => $token['expires_in'],
-            ]);  //
+            return $token;
             /**
-            ->cookie('refresh_token', $token['refresh_token'], 86400, null, null, false, true)
-            ->cookie('access_token', $token['access_token'], 86400, null, null, false, true)
+            return response()->json([
+            'access_token' => $token['access_token'],
+            'refresh_token' => $token['refresh_token'],
+            'expires_in' => $token['expires_in'],
+            ])->cookie('refresh_token', $token['refresh_token'], 86400, null, null, false, true)
+            ->cookie('access_token', $token['access_token'], 86400, null, null, false, true);
              */
         }
 //

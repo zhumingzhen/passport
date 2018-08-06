@@ -57,8 +57,11 @@ class TokenProxy
                 'access_token' => $token['access_token'],
                 'refresh_token' => $token['refresh_token'],
                 'expires_in' => $token['expires_in'],
-            ])->cookie('refresh_token', $token['refresh_token'], 86400, null, null, false, true)
-                ->cookie('access_token', $token['access_token'], 86400, null, null, false, true);  //
+            ]);  //
+            /**
+            ->cookie('refresh_token', $token['refresh_token'], 86400, null, null, false, true)
+            ->cookie('access_token', $token['access_token'], 86400, null, null, false, true)
+             */
         }
 //
         throw new UnauthorizedException('账号或密码错误');

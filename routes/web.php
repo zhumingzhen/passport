@@ -28,41 +28,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-
-Route::get('/asdf', function (\Illuminate\Http\Request $request){
-    $http = new \GuzzleHttp\Client();
-
-    $response = $http->post('http://passport.it1.me/oauth/token', [
-        'form_params' => [
-            'grant_type' => 'password',
-            'client_id' => '2',
-            'client_secret' => 'J6cX9kQVBZATZVbvwYeo9rVzW56A51Savuhu1ily',
-            'username' => '18310459359',
-            'password' => '111111',
-            'scope' => '*',
-        ],
-    ]);
-
-
-    return json_decode((string)$response->getBody(), true);
-});
-
-Route::get('/useraaa', function(Request $request) {
-    $guzzle = new GuzzleHttp\Client;
-
-    $response = $guzzle->post('http://passport.test/oauth/token', [
-        'form_params' => [
-            'grant_type' => 'client_credentials',
-            'client_id' => '4',
-            'client_secret' => 'hSk53nLPCqX2jVq15k2PVWmR76SJYuUkFZ9OSy1O',
-            'scope' => '*',
-        ],
-    ]);
-
-    echo json_decode((string) $response->getBody(), true);
-});
-
-
+Route::get('/logins', 'Auth\LoginController@login');
 
 Auth::routes();
 

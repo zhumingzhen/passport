@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Controllers\Auth\LoginController;
 use App\Wechat;
 use EasyWeChat;
 use Illuminate\Http\Request;
@@ -31,7 +32,7 @@ class WechatController extends Controller
         return $this->app->server->serve();
     }
 
-    public function userinfo()
+    public function userinfo(LoginController $loginController)
     {
 //        $user = session('wechat.oauth_user'); // 拿到授权用户资料
 
@@ -64,8 +65,11 @@ class WechatController extends Controller
                 // 重定向失败 可跳转到 404 页面
                 return '重定向到了自身，结束死循环。上一页地址：'.$_GET['redirect'].' ；当前页地址'.url()->current();
             }
+
+            $tokenJson = $loginController->login(); // 获取 token
+
             $code = rand(100000,999999);
-            Redis::set($code,"woshicode");
+            Redis::set($code, $tokenJson);
             Redis::expire($code, 300);
             return redirect($_GET['redirect'].'?code='.$code)->cookie('hello', 'hello, world', 86400, null, null, false, true);
         }

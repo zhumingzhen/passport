@@ -32,11 +32,11 @@ Route::get('/', function () {
 Route::get('/asdf', function (\Illuminate\Http\Request $request){
     $http = new \GuzzleHttp\Client();
 
-    $response = $http->post('http://passport.test/oauth/token', [
+    $response = $http->post('http://passport.it1.me/oauth/token', [
         'form_params' => [
             'grant_type' => 'password',
-            'client_id' => '4',
-            'client_secret' => 'hSk53nLPCqX2jVq15k2PVWmR76SJYuUkFZ9OSy1O',
+            'client_id' => '2',
+            'client_secret' => 'J6cX9kQVBZATZVbvwYeo9rVzW56A51Savuhu1ily',
             'username' => '18310459359',
             'password' => '111111',
             'scope' => '*',

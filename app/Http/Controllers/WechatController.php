@@ -68,7 +68,7 @@ class WechatController extends Controller
 
             $tokenJson = $loginController->login(); // 获取 token
 
-            $code = rand(100000,999999);
+            $code = md5(uniqid());
             Redis::set($code, $tokenJson);
             Redis::expire($code, 300);
             return redirect($_GET['redirect'].'?code='.$code);

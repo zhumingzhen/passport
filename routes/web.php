@@ -27,3 +27,43 @@ Route::group(['middleware' => ['web', 'wechat.oauth:snsapi_userinfo']], function
 Route::get('/', function () {
     return view('welcome');
 });
+
+
+Route::get('/asdf', function (\Illuminate\Http\Request $request){
+    $http = new \GuzzleHttp\Client();
+
+    $response = $http->post('http://passport.test/oauth/token', [
+        'form_params' => [
+            'grant_type' => 'password',
+            'client_id' => '4',
+            'client_secret' => 'hSk53nLPCqX2jVq15k2PVWmR76SJYuUkFZ9OSy1O',
+            'username' => '18310459359',
+            'password' => '111111',
+            'scope' => '*',
+        ],
+    ]);
+
+
+    return json_decode((string)$response->getBody(), true);
+});
+
+Route::get('/useraaa', function(Request $request) {
+    $guzzle = new GuzzleHttp\Client;
+
+    $response = $guzzle->post('http://passport.test/oauth/token', [
+        'form_params' => [
+            'grant_type' => 'client_credentials',
+            'client_id' => '4',
+            'client_secret' => 'hSk53nLPCqX2jVq15k2PVWmR76SJYuUkFZ9OSy1O',
+            'scope' => '*',
+        ],
+    ]);
+
+    echo json_decode((string) $response->getBody(), true);
+});
+
+
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');

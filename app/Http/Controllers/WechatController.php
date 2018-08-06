@@ -34,13 +34,12 @@ class WechatController extends Controller
 
     public function userinfo(LoginController $loginController)
     {
-//        $user = session('wechat.oauth_user'); // 拿到授权用户资料
+        $user = session('wechat.oauth_user'); // 拿到授权用户资料
 
-//        $original = $user['default']['original'];
-//        $openid = $original['openid'];
-//        $avatar = $original['headimgurl'];
+        $original = $user['default']['original'];
+        $openid = $original['openid'];
 
-        $isWechat = Wechat::where('openid', '12121')->first();  // firstOrFail
+        $isWechat = Wechat::where('openid', $openid)->first();  // firstOrFail
 
         /**
          * 业务系统判断没有登录
@@ -57,7 +56,7 @@ class WechatController extends Controller
          */
         if ( !$isWechat ) {
             // 如果没有当前 openid 信息，则跳转到手机号登录页面
-            return view('login');
+            return view('auth.login');
 
         }else {
             // 如果已存在当前 openid 信息，则跳转到来源页面  url()->previous()
@@ -79,18 +78,5 @@ class WechatController extends Controller
         return $userArrr['original']['openid'];   //
     }
 
-//    public function q()
-//    {
-//        if (Cookie::get('refreshToken')) {
-//            return '已登录';
-//        }else{
-//            return redirect('http://passport.test/usert');
-//        }
-//    }
 
-    public function cookiess()
-    {
-        Cookie::make('test', 'hello, world', 100);
-        return redirect('/')->cookie('refreshToken111', 'dsadsadsa', 86400, null, null, false, true);
-    }
 }

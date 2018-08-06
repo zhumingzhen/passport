@@ -43,6 +43,8 @@ class LoginController extends Controller
 
     public function login()
     {
+        $user = session('wechat.oauth_user'); // 拿到授权用户资料
+        dd($user);
         return $this->tokenProxy->proxy('password', [
             'username' => '18310459359',   // request('mobile')
             'password' => '111111',  // request('password')

@@ -99,7 +99,7 @@ class LoginController extends Controller
             'city' => $original['city'],
             'province' => $original['province'],
             'country' => $original['country'],
-            'avatar' => $original['avatar'],
+            'avatar' => $original['headimgurl'],
         ]);
     }
 }

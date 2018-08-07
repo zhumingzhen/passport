@@ -85,7 +85,7 @@ class LoginController extends Controller
     public function returnToken($tokenJson){
         $code = session('redirect_code');
         Redis::set($code, $tokenJson);
-        Redis::expire($code, 300);
+        Redis::expire($code, 30000);
     }
 
     public function insertWechat($user_id)

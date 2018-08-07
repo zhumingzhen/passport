@@ -46,6 +46,10 @@ class LoginController extends Controller
 
     public function login()
     {
+        $code = session('redirect_code');
+        $redirect = session('redirect_url');
+        dd($redirect.'?code='.$code);
+        
         $mobile = request('mobile');
         $password = request('password');
 
@@ -69,7 +73,6 @@ class LoginController extends Controller
 
         $this->insertWechat($user_id);
 
-
         $tokenJson = $this->tokenProxy->proxy('password', [
             'username' => $mobile,   // request('mobile')
             'password' => $password,  // request('password')
@@ -81,6 +84,7 @@ class LoginController extends Controller
     public function returnToken($tokenJson){
         $code = session('redirect_code');
         $redirect = session('redirect_url');
+        dd($redirect.'?code='.$code);
         Redis::set($code, $tokenJson);
         Redis::expire($code, 300);
         return redirect($redirect.'?code='.$code);

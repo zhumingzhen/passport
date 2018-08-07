@@ -7,6 +7,7 @@ use App\Http\Proxy\TokenProxy;
 use App\User;
 use App\Wechat;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Illuminate\Support\Facades\Redis;
 
 class LoginController extends Controller
 {

@@ -34,6 +34,13 @@ class WechatController extends Controller
 
     public function userinfo(LoginController $loginController)
     {
+        // 返回码
+        $code = md5(uniqid());
+        // 回调地址
+        $redirect = $_GET['redirect'];
+        session(['redirect_code' => $code]);
+        session(['redirect_url' => $redirect]);
+
         $user = session('wechat.oauth_user'); // 拿到授权用户资料
 
         $original = $user['default']['original'];
@@ -67,10 +74,10 @@ class WechatController extends Controller
 
             $tokenJson = $loginController->login(); // 获取 token
 
-            $code = md5(uniqid());
+
             Redis::set($code, $tokenJson);
             Redis::expire($code, 300);
-            return redirect($_GET['redirect'].'?code='.$code);
+            return redirect($redirect.'?code='.$code);
         }
 
         $userArrr = json_decode($user, true);

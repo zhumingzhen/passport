@@ -48,8 +48,7 @@ class LoginController extends Controller
     {
         $code = session('redirect_code');
         $redirect = session('redirect_url');
-        dd($redirect.'?code='.$code);
-        
+
         $mobile = request('mobile');
         $password = request('password');
 
@@ -79,15 +78,14 @@ class LoginController extends Controller
         ]);
 
         $this->returnToken($tokenJson);
+
+        return redirect($redirect.'?code='.$code);
     }
 
     public function returnToken($tokenJson){
         $code = session('redirect_code');
-        $redirect = session('redirect_url');
-        dd($redirect.'?code='.$code);
         Redis::set($code, $tokenJson);
         Redis::expire($code, 300);
-        return redirect($redirect.'?code='.$code);
     }
 
     public function insertWechat($user_id)

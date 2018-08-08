@@ -38,8 +38,7 @@
                         <div class="panel-heading">重置密码</div>
 
                         <div class="panel-body">
-                            <form class="form-horizontal" method="POST" action="">
-                                {{--{{ route('passwordReset') }}--}}
+                            <form class="form-horizontal" method="POST" action="{{ route('passwordReset') }}">
                                 {{ csrf_field() }}
 
                                 {{--<input type="hidden" name="token" value="{{ $token }}">--}}

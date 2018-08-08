@@ -13,6 +13,9 @@
 // 短信
 Route::post('/registerSms', 'Common\SmsController@registerSms')->name('registerSms');
 
+// 重置密码
+Route::post('/passwordReset', 'ResetPasswordController@reset')->name('passwordReset');
+
 // 微信
 Route::any('/wechat', 'WechatController@serve');
 

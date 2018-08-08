@@ -37,9 +37,10 @@ class RegisterController extends Controller
      *
      * @return void
      */
-    public function __construct()
+    public function __construct(TokenProxy $tokenProxy)
     {
         $this->middleware('guest');
+        $this->tokenProxy = $tokenProxy;
     }
 
     /**

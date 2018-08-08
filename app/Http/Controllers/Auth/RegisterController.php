@@ -101,7 +101,6 @@ class RegisterController extends Controller
         // 添加微信信息
         $wechatRepository->insertWechat($user->id);
 
-
         // 获取 token 并保存 token 到 redis
         $accessTokenRepository->getAccessToken($request->all());
         // 跳回 redirect

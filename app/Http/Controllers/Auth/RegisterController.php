@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Repositories\UserRepository;
 use App\User;
 use App\Wechat;
 use App\Http\Controllers\Controller;
@@ -79,8 +80,10 @@ class RegisterController extends Controller
      * @param Request $request
      * @return $this|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
-    public function register(Request $request)
+    public function register(Request $request, UserRepository $userRepository)
     {
+        $userRepository->insertWechat('12');
+
         $code = session('redirect_code');
         $redirect = session('redirect_url');
 
@@ -101,7 +104,7 @@ class RegisterController extends Controller
         event(new Registered($user = $this->create($request->all())));
 
         // 添加微信信息
-        $this->insertWechat($user->id);
+        $userRepository->insertWechat($user->id);
         // 代理模式
         $tokenJson = $this->tokenProxy->proxy('password', [
             'username' => $request['mobile'],   // request('mobile')
@@ -125,21 +128,5 @@ class RegisterController extends Controller
         Redis::expire($code, 30000);
     }
 
-    public function insertWechat($user_id)
-    {
-        $user = session('wechat.oauth_user'); // 拿到授权用户资料
-        $original = $user['default']['original'];
-        // 添加微信信息
-        return Wechat::create([
-            'user_id' => $user_id,
-            'openid' => $original['openid'],
-            'nickname' => $original['nickname'],
-            'sex' => $original['sex'],
-            'language' => $original['language'],
-            'city' => $original['city'],
-            'province' => $original['province'],
-            'country' => $original['country'],
-            'avatar' => $original['headimgurl'],
-        ]);
-    }
+
 }

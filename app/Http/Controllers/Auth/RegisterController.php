@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\User;
+use App\Wechat;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Redis;
 use Illuminate\Support\Facades\Validator;
@@ -88,7 +89,7 @@ class RegisterController extends Controller
 
         $smsCode = Redis::get('smsCode_'.$request['mobile']);
         // 验证手机号
-        if (\App\User::where('mobile',$request['mobile'])->first()){
+        if (User::where('mobile',$request['mobile'])->first()){
             return redirect()->back()->withErrors(['mobile'=>'手机号已存在']);
         }
         // 验证短信验证码
@@ -99,13 +100,17 @@ class RegisterController extends Controller
 
         event(new Registered($user = $this->create($request->all())));
 
+        // 添加微信信息
+        $this->insertWechat($user->id);
+        // 代理模式
         $tokenJson = $this->tokenProxy->proxy('password', [
             'username' => $request['mobile'],   // request('mobile')
             'password' => $request['password'],  // request('password')
         ]);
 
+        // 保存 token
         $this->returnToken($tokenJson);
-
+        // 跳回 redirect
         return redirect($redirect.'?code='.$code);
 
         $this->guard()->login($user);
@@ -118,5 +123,23 @@ class RegisterController extends Controller
         $code = session('redirect_code');
         Redis::set($code, $tokenJson);
         Redis::expire($code, 30000);
+    }
+
+    public function insertWechat($user_id)
+    {
+        $user = session('wechat.oauth_user'); // 拿到授权用户资料
+        $original = $user['default']['original'];
+        // 添加微信信息
+        return Wechat::create([
+            'user_id' => $user_id,
+            'openid' => $original['openid'],
+            'nickname' => $original['nickname'],
+            'sex' => $original['sex'],
+            'language' => $original['language'],
+            'city' => $original['city'],
+            'province' => $original['province'],
+            'country' => $original['country'],
+            'avatar' => $original['headimgurl'],
+        ]);
     }
 }

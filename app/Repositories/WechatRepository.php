@@ -9,6 +9,8 @@
 
 namespace App\Repositories;
 
+use App\Wechat;
+
 class WechatRepository
 {
     public function insertWechat($user_id)

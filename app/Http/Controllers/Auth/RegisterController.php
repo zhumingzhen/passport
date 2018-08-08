@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Auth;
 use App\Repositories\AccessTokenRepository;
 use App\Repositories\WechatRepository;
 use App\User;
-use App\Wechat;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Redis;
 use Illuminate\Support\Facades\Validator;

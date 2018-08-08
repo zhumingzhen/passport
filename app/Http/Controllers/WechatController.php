@@ -42,6 +42,7 @@ class WechatController extends Controller
         session(['redirect_url' => $redirect]);
 
         $user = session('wechat.oauth_user'); // 拿到授权用户资料
+        dd($user);
 
         $original = $user['default']['original'];
         $openid = $original['openid'];

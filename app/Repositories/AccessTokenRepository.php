@@ -10,6 +10,7 @@
 namespace App\Repositories;
 
 use App\Http\Proxy\TokenProxy;
+use Illuminate\Support\Facades\Redis;
 
 class AccessTokenRepository
 {

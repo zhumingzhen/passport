@@ -4,8 +4,11 @@ namespace App\Http\Controllers\Auth;
 
 use App\User;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Redis;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Auth\Events\Registered;
 use Illuminate\Foundation\Auth\RegistersUsers;
+use Illuminate\Http\Request;
 
 class RegisterController extends Controller
 {
@@ -48,8 +51,7 @@ class RegisterController extends Controller
     protected function validator(array $data)
     {
         return Validator::make($data, [
-            'name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:users',
+            'mobile' => 'required|min:11|max:11',
             'password' => 'required|string|min:6|confirmed',
         ]);
     }
@@ -63,9 +65,56 @@ class RegisterController extends Controller
     protected function create(array $data)
     {
         return User::create([
-            'name' => $data['name'],
-            'email' => $data['email'],
+            'mobile' => $data['mobile'],
+            'username' =>  substr_replace($data['mobile'],'****',3,4),
             'password' => bcrypt($data['password']),
         ]);
+    }
+
+    /**
+     * 重写父类方法
+     * @param Request $request
+     * @return $this|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     */
+    public function register(Request $request)
+    {
+        $code = session('redirect_code');
+        $redirect = session('redirect_url');
+
+        $this->validator($request->all())->validate();
+
+
+        $smsCode = Redis::get('smsCode_'.$request['mobile']);
+        // 验证手机号
+        if (\App\User::where('mobile',$request['mobile'])->first()){
+            return redirect()->back()->withErrors(['mobile'=>'手机号已存在']);
+        }
+        // 验证短信验证码
+        if ($request['code'] == '' || $smsCode != $request['code']){
+            // 验证码不正确
+//            return redirect()->back()->withErrors(['code'=>'验证码错误']);
+        }
+
+        event(new Registered($user = $this->create($request->all())));
+
+        $tokenJson = $this->tokenProxy->proxy('password', [
+            'username' => $request['mobile'],   // request('mobile')
+            'password' => $request['password'],  // request('password')
+        ]);
+
+        $this->returnToken($tokenJson);
+
+        return redirect($redirect.'?code='.$code);
+
+        $this->guard()->login($user);
+
+        return $this->registered($request, $user)
+            ?: redirect($this->redirectPath());
+    }
+
+    public function returnToken($tokenJson){
+        $code = session('redirect_code');
+        Redis::set($code, $tokenJson);
+        Redis::expire($code, 30000);
     }
 }

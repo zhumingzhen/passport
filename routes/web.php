@@ -10,6 +10,8 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
+// 短信
+Route::post('/registerSms', 'Common\SmsController@registerSms')->name('registerSms');
 
 // 微信
 Route::any('/wechat', 'WechatController@serve');

@@ -46,6 +46,7 @@ class LoginController extends Controller
 
     public function login()
     {
+
         $code = session('redirect_code');
         $redirect = session('redirect_url');
 

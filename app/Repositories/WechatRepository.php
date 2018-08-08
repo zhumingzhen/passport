@@ -9,13 +9,11 @@
 
 namespace App\Repositories;
 
-class UserRepository
+class WechatRepository
 {
     public function insertWechat($user_id)
     {
         $userWechat = session('wechat.oauth_user'); // 拿到授权用户资料
-
-        dd($userWechat);
         $original = $userWechat['default']['original'];
         // 添加微信信息
         return Wechat::create([

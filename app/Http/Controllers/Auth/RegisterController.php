@@ -2,7 +2,8 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\Repositories\UserRepository;
+use App\Repositories\AccessTokenRepository;
+use App\Repositories\WechatRepository;
 use App\User;
 use App\Wechat;
 use App\Http\Controllers\Controller;
@@ -80,13 +81,8 @@ class RegisterController extends Controller
      * @param Request $request
      * @return $this|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
-    public function register(Request $request, UserRepository $userRepository)
+    public function register(Request $request, WechatRepository $wechatRepository, AccessTokenRepository $accessTokenRepository)
     {
-        $userRepository->insertWechat('12');
-
-        $code = session('redirect_code');
-        $redirect = session('redirect_url');
-
         $this->validator($request->all())->validate();
 
 
@@ -104,16 +100,15 @@ class RegisterController extends Controller
         event(new Registered($user = $this->create($request->all())));
 
         // 添加微信信息
-        $userRepository->insertWechat($user->id);
-        // 代理模式
-        $tokenJson = $this->tokenProxy->proxy('password', [
-            'username' => $request['mobile'],   // request('mobile')
-            'password' => $request['password'],  // request('password')
-        ]);
+        $wechatRepository->insertWechat($user->id);
 
-        // 保存 token
-        $this->returnToken($tokenJson);
+
+        // 获取 token 并保存 token 到 redis
+        $accessTokenRepository->getAccessToken($request->all());
         // 跳回 redirect
+        // 获取跳转参数
+        $code = session('redirect_code');
+        $redirect = session('redirect_url');
         return redirect($redirect.'?code='.$code);
 
         $this->guard()->login($user);
@@ -122,11 +117,7 @@ class RegisterController extends Controller
             ?: redirect($this->redirectPath());
     }
 
-    public function returnToken($tokenJson){
-        $code = session('redirect_code');
-        Redis::set($code, $tokenJson);
-        Redis::expire($code, 30000);
-    }
+
 
 
 }

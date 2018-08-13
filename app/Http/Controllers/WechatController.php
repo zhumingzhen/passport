@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Auth\LoginController;
+use App\User;
 use App\Wechat;
 use EasyWeChat;
 use Illuminate\Http\Request;
@@ -32,7 +33,7 @@ class WechatController extends Controller
         return $this->app->server->serve();
     }
 
-    public function userinfo(LoginController $loginController)
+    public function userinfo(LoginController $loginController,User $userModel)
     {
         // 返回码
         $code = md5(uniqid());
@@ -43,10 +44,13 @@ class WechatController extends Controller
 
         $user = session('wechat.oauth_user'); // 拿到授权用户资料
 
-        $original = $user['default']['original'];
-        $openid = $original['openid'];
+//        $original = $user['default']['original'];
+//        $openid = $original['openid'];
+        $openid = '12121';
 
         $isWechat = Wechat::where('openid', $openid)->first();  // firstOrFail
+
+//        $userModel->username('openid');
 
         /**
          * 业务系统判断没有登录
@@ -72,17 +76,13 @@ class WechatController extends Controller
                 return '重定向到了自身，结束死循环。上一页地址：'.$_GET['redirect'].' ；当前页地址'.url()->current();
             }
 
-            $tokenJson = $loginController->login(); // 获取 token
+            $user = User::find($isWechat->user_id);
+            $token = $user->createToken($isWechat->openid)->accessToken;
 
-
-            Redis::set($code, $tokenJson);
-            Redis::expire($code, 300);
+            Redis::set($code, $token);
+            Redis::expire($code, 3000);
             return redirect($redirect.'?code='.$code);
         }
-
-        $userArrr = json_decode($user, true);
-
-        return $userArrr['original']['openid'];   //
     }
 
 

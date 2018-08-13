@@ -10,6 +10,8 @@ class User extends Authenticatable
 {
     use HasApiTokens, Notifiable;
 
+    protected $column = 'mobile';
+
     /**
      * The attributes that are mass assignable.
      *
@@ -34,7 +36,11 @@ class User extends Authenticatable
 //        return \App\User::normal()
 //            ->where('phone', $username)
 //            ->first();
-        return $this->where('mobile', $username)
+        return $this->where($this->column, $username)
             ->first();
+    }
+
+    public function username($column){
+        $this->column = $column;
     }
 }

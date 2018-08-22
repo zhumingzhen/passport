@@ -94,7 +94,9 @@ class WechatController extends Controller
 
     public function share()
     {
-        return view('share');
+
+        $app = $this->app;
+        return view('share',compact('app'));
     }
 
 

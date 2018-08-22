@@ -38,3 +38,7 @@ Route::get('/logins', 'Auth\LoginController@login');
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+
+
+Route::get('/sdk', 'WechatController@jssdk');
+Route::get('/share', 'WechatController@share');

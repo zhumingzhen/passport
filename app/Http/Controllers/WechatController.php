@@ -98,6 +98,7 @@ class WechatController extends Controller
     {
 
         $app = $this->app;
+        $app->jssdk->setUrl('http://passport.it1.me');
         return view('share',compact('app'));
     }
 

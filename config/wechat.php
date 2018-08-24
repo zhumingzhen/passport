@@ -59,9 +59,13 @@ return [
      */
     'official_account' => [
         'default' => [
-            'app_id' => env('WECHAT_OFFICIAL_ACCOUNT_APPID', 'wx9d25fceff6d170a4'),         // AppID   wxe6bd61546e337818
-            'secret' => env('WECHAT_OFFICIAL_ACCOUNT_SECRET', 'ed6e18820efb9cd34c85aaab253d0633'),    // AppSecret   d8adbaf94e49377a95c25f811f9324e8
-            'token' => env('WECHAT_OFFICIAL_ACCOUNT_TOKEN', 'test'),           // Token
+//            'app_id' => env('WECHAT_OFFICIAL_ACCOUNT_APPID', 'wx9d25fceff6d170a4'),         // AppID   wxe6bd61546e337818
+//            'secret' => env('WECHAT_OFFICIAL_ACCOUNT_SECRET', 'ed6e18820efb9cd34c85aaab253d0633'),    // AppSecret   d8adbaf94e49377a95c25f811f9324e8
+//            'token' => env('WECHAT_OFFICIAL_ACCOUNT_TOKEN', 'test'),           // Token
+//            'aes_key' => env('WECHAT_OFFICIAL_ACCOUNT_AES_KEY', 'tOihYdEo0SRv0b6RrkxjxIRjxKM8uCe5xrEevtCDhJf'),                 // EncodingAESKey
+            'app_id' => env('WECHAT_OFFICIAL_ACCOUNT_APPID', 'wxc19e0f81db96f6b4'),         // AppID   wxe6bd61546e337818
+            'secret' => env('WECHAT_OFFICIAL_ACCOUNT_SECRET', '4dfd0c4c1294ccae02eaaee0fb2fa4f2'),    // AppSecret   d8adbaf94e49377a95c25f811f9324e8
+            'token' => env('WECHAT_OFFICIAL_ACCOUNT_TOKEN', 'activity'),           // Token
             'aes_key' => env('WECHAT_OFFICIAL_ACCOUNT_AES_KEY', 'tOihYdEo0SRv0b6RrkxjxIRjxKM8uCe5xrEevtCDhJf'),                 // EncodingAESKey
 
             /*

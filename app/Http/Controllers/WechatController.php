@@ -9,6 +9,7 @@ use EasyWeChat;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\Redis;
+use Illuminate\Support\Facades\URL;
 
 class WechatController extends Controller
 {
@@ -89,7 +90,7 @@ class WechatController extends Controller
     public function jssdkShare(Request $request)
     {
         $url = $request->url;
-        $this->app->jssdk->setUrl($url);
+        $this->app->jssdk->setUrl(URL::previous());
         $config = $this->app->jssdk->buildConfig(array('onMenuShareQQ', 'onMenuShareWeibo'), true, false, false);
         return $config;
     }

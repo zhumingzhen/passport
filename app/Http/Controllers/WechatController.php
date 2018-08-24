@@ -89,8 +89,8 @@ class WechatController extends Controller
     public function jssdkShare(Request $request)
     {
         $url = $request->url;
-        // ->setUrl($url)
-        $config = $this->app->jssdk->buildConfig(array('onMenuShareQQ', 'onMenuShareWeibo'), true);
+        $this->app->jssdk->setUrl($url);
+        $config = $this->app->jssdk->buildConfig(array('onMenuShareQQ', 'onMenuShareWeibo'), true, false, false);
         return $config;
     }
 

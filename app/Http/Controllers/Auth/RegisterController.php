@@ -102,12 +102,12 @@ class RegisterController extends Controller
         $wechatRepository->insertWechat($user->id);
 
         // 获取 token 并保存 token 到 redis
-        $accessTokenRepository->getAccessToken($request->all());
+        $token = $accessTokenRepository->getAccessToken($request->all());
         // 跳回 redirect
         // 获取跳转参数
         $code = session('redirect_code');
         $redirect = session('redirect_url');
-        return redirect($redirect.'?code='.$code);
+        return redirect($redirect.'?token='.$token);
 
         $this->guard()->login($user);
 

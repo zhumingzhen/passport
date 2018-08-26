@@ -82,7 +82,8 @@ class WechatController extends Controller
 
             Redis::set($code, $token);
             Redis::expire($code, 3000);
-            return redirect($redirect.'?code='.$code.'&token='.$token);
+//            return redirect($redirect.'?code='.$code.'&token='.$token);
+            return redirect($redirect.'?token='.$token);
         }
     }
 

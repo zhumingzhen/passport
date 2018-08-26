@@ -66,10 +66,10 @@ class LoginController extends Controller
         $wechatRepository->insertWechat($user_id);
 
         // 获取 token 并保存 token 到 redis
-        $accessTokenRepository->getAccessToken($request->all());
+        $token = $accessTokenRepository->getAccessToken($request->all());
 
         $code = session('redirect_code');
         $redirect = session('redirect_url');
-        return redirect($redirect.'?code='.$code);
+        return redirect($redirect.'?token='.$token);
     }
 }

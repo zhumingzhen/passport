@@ -35,7 +35,9 @@ class AccessTokenRepository
             'password' => $data['password'],  // request('password')
         ]);
 
-        $this->returnToken($tokenJson);
+        $tokenArr = json_decode($tokenJson, true);
+
+        $this->returnToken($tokenArr['access_token']);
 
         return $tokenJson;
     }

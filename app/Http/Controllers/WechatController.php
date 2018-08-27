@@ -40,14 +40,17 @@ class WechatController extends Controller
         $code = md5(uniqid());
         // 回调地址
         $redirect = $_GET['redirect'];
+        if ($redirect == 'sign'){
+            $redirect = urlencode('http://sign.mailaogu.cc');
+        }
+
         session(['redirect_code' => $code]);
         session(['redirect_url' => $redirect]);
 
         $user = session('wechat.oauth_user'); // 拿到授权用户资料
 
-//        $original = $user['default']['original'];
-//        $openid = $original['openid'];
-        $openid = '12121';
+        $original = $user['default']['original'];
+        $openid = $original['openid'];
 
         $isWechat = Wechat::where('openid', $openid)->first();  // firstOrFail
 
@@ -94,7 +97,9 @@ class WechatController extends Controller
             $res = [
                 'code'=> 62000,
                 'msg'=> '请求成功',
-                'data'=> $accessToken,
+                'data'=> [
+                    'access_token' => $accessToken
+                ],
             ];
         }else{
             $res = [

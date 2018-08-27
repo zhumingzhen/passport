@@ -111,6 +111,14 @@ class WechatController extends Controller
         return $res;
     }
 
+    public function cctoken()
+    {
+        $user = User::find(5010459);
+        $token = $user->createToken(5010459)->accessToken;
+
+        return $token;
+    }
+
 
     public function jssdkShare(Request $request)
     {

@@ -46,3 +46,8 @@ Route::get('/home', 'HomeController@index')->name('home');
 // jssdkShare
 Route::get('/jssdkShare', 'WechatController@jssdkShare');
 Route::get('/share', 'WechatController@share');
+
+Route::get('/cctoken', 'WechatController@cctoken');
+
+
+

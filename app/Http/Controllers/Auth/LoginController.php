@@ -70,6 +70,6 @@ class LoginController extends Controller
 
         $code = session('redirect_code');
         $redirect = session('redirect_url');
-        return redirect($redirect.'?token='.$token);
+        return redirect($redirect.'?code='.$code);
     }
 }

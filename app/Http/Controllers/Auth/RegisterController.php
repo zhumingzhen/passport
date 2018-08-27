@@ -107,7 +107,7 @@ class RegisterController extends Controller
         // 获取跳转参数
         $code = session('redirect_code');
         $redirect = session('redirect_url');
-        return redirect($redirect.'?token='.$token);
+        return redirect($redirect.'?code='.$code);
 
         $this->guard()->login($user);
 

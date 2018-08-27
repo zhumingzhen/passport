@@ -82,9 +82,28 @@ class WechatController extends Controller
 
             Redis::set($code, $token);
             Redis::expire($code, 3000);
-//            return redirect($redirect.'?code='.$code.'&token='.$token);
-            return redirect($redirect.'?token='.$token);
+            return redirect($redirect.'?code='.$code);
         }
+    }
+
+    public function accessToken(Request $request)
+    {
+        $code = $request->code;
+        $accessToken = Redis::get($code);
+        if ($accessToken){
+            $res = [
+                'code'=> 62000,
+                'msg'=> '请求成功',
+                'data'=> $accessToken,
+            ];
+        }else{
+            $res = [
+                'code'=> 64000,
+                'msg'=> 'token获取失败',
+            ];
+        }
+
+        return $res;
     }
 
 

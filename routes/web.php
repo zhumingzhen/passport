@@ -29,6 +29,9 @@ Route::group(['middleware' => ['web', 'wechat.oauth:snsapi_userinfo']], function
     Route::get('/user', 'WechatController@userinfo');
 });
 
+Route::get('/accessToken', 'WechatController@accessToken');
+
+
 Route::get('/', function () {
     return view('welcome');
 });

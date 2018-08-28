@@ -40,12 +40,17 @@ class WechatController extends Controller
         $code = md5(uniqid());
         // 回调地址
         $redirect = $_GET['redirect'];
+        $invite_user_id = $_GET['uid']?:0;
+
         if ($redirect == 'sign'){
             $redirect = 'http://sign.mailaogu.cc';
         }
 
         session(['redirect_code' => $code]);
         session(['redirect_url' => $redirect]);
+        if ($invite_user_id != 0){
+            session(['invite_user_id' => $invite_user_id]);  // 邀请人id
+        }
 
         $user = session('wechat.oauth_user'); // 拿到授权用户资料
 
@@ -71,7 +76,7 @@ class WechatController extends Controller
          */
         if ( !$isWechat ) {
             // 如果没有当前 openid 信息，则跳转到手机号登录页面
-            return view('auth.login');
+            return view('auth.login',compact('invite_user_id'));
 
         }else {
             // 如果已存在当前 openid 信息，则跳转到来源页面  url()->previous()

@@ -85,8 +85,8 @@
                                     <a class="btn btn-link" href="{{ route('password.request') }}">
                                         忘记密码?
                                     </a>
-                                    <a class="btn btn-link pull-right" href="{{ route('register') }}" >
-                                        立即注册{{$invite_user_id}}
+                                    <a class="btn btn-link pull-right" href="{{ route('register'.$invite_user_id) }}" >
+                                        立即注册
                                     </a>
                                 </div>
                             </div>

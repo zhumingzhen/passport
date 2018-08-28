@@ -46,6 +46,7 @@ class TokenProxy
                 'form_params' => $data
             ]);
         } catch (RequestException $exception) {
+            return redirect('login')->with('danger','账号或密码错误');
             throw new UnauthorizedException('请求失败，服务器错误');
         }
 

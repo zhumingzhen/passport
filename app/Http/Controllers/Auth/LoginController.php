@@ -62,11 +62,12 @@ class LoginController extends Controller
             $user_id = $isUser->id;
         }
 
-        // 添加微信信息
-        $wechatRepository->insertWechat($user_id);
 
         // 获取 token 并保存 token 到 redis
         $token = $accessTokenRepository->getAccessToken($request->all());
+
+        // 添加微信信息
+        $wechatRepository->insertWechat($user_id);
 
         $code = session('redirect_code');
         $redirect = session('redirect_url');

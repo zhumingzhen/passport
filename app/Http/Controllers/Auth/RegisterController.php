@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\CenterAward;
+use App\CenterSexcDetail;
 use App\Repositories\AccessTokenRepository;
 use App\Repositories\WechatRepository;
 use App\User;
@@ -82,14 +84,7 @@ class RegisterController extends Controller
      */
     public function register(Request $request, WechatRepository $wechatRepository, AccessTokenRepository $accessTokenRepository)
     {
-        $invite_user_id = session('invite_user_id');
-        if ($invite_user_id){
-        dd($invite_user_id);
-        }else{
-            dd(111111);
-        }
         $this->validator($request->all())->validate();
-
 
         $smsCode = Redis::get('smsCode_'.$request['mobile']);
         // 验证手机号
@@ -109,6 +104,19 @@ class RegisterController extends Controller
 
         // 添加微信信息
         $wechatRepository->insertWechat($user->id);
+
+        // 邀请用户 给 邀请人送币
+        $invite_user_id = session('invite_user_id');
+        if ($invite_user_id){
+            $sexc = rand(5,10);
+            CenterAward::where('user_id',$invite_user_id)->increment('sexc',$sexc);
+            CenterSexcDetail::create([
+                'user_id' => $invite_user_id,
+                'sexc' => $sexc,
+                'continuous' => 3,
+                'gain' => 1
+            ]);
+        }
 
         // 跳回 redirect
         // 获取跳转参数

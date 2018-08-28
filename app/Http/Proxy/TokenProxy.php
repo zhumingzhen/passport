@@ -27,7 +27,7 @@ class TokenProxy
 
     public function proxy($grantType, array $data = [])
     {
-//        try {
+        try {
             // 请求地址
             $url = request()->root() . '/oauth/token';
 
@@ -45,10 +45,10 @@ class TokenProxy
         $response = $this->http->post($url, [
                 'form_params' => $data
             ]);
-//        } catch (RequestException $exception) {
+        } catch (RequestException $exception) {
 //            return redirect('login')->with('danger','账号或密码错误');
-//            throw new UnauthorizedException('请求失败，服务器错误');
-//        }
+            throw new UnauthorizedException('请求失败，服务器错误');
+        }
 
         if ($response->getStatusCode() != 401){
             $token = json_decode((string) $response->getBody(), true);
@@ -62,9 +62,9 @@ class TokenProxy
             ])->cookie('refresh_token', $token['refresh_token'], 86400, null, null, false, true)
             ->cookie('access_token', $token['access_token'], 86400, null, null, false, true);
              */
-        }else{
-//            return redirect('login')->with('danger','账号或密码错误111');
-            throw new UnauthorizedException('账号或密码错误');
         }
+
+        throw new UnauthorizedException('账号或密码错误');
+
     }
 }

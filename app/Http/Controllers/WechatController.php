@@ -41,7 +41,7 @@ class WechatController extends Controller
         // 回调地址
         $redirect = $_GET['redirect'];
         if ($redirect == 'sign'){
-            $redirect = urlencode('http://sign.mailaogu.cc');
+            $redirect = 'http://sign.mailaogu.cc';
         }
 
         session(['redirect_code' => $code]);
@@ -77,7 +77,7 @@ class WechatController extends Controller
             // 如果已存在当前 openid 信息，则跳转到来源页面  url()->previous()
             if (url()->current() == $_GET['redirect']){
                 // 重定向失败 可跳转到 404 页面
-                return '重定向到了自身，结束死循环。上一页地址：'.$_GET['redirect'].' ；当前页地址'.url()->current();
+                return '重定向到了自身，结束死循环。上一页地址：'.$redirect.' ；当前页地址'.url()->current();
             }
 
             $user = User::find($isWechat->user_id);

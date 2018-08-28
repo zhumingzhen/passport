@@ -84,7 +84,7 @@ class WechatController extends Controller
             $token = $user->createToken($isWechat->openid)->accessToken;
 
             Redis::set($code, $token);
-            Redis::expire($code, 3000);
+            Redis::expire($code, 30000);
             return redirect($redirect.'?code='.$code);
         }
     }

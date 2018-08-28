@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Auth;
 
+use GuzzleHttp\Exception\RequestException;
 use App\Http\Controllers\Controller;
 use App\Http\Proxy\TokenProxy;
 use App\Repositories\AccessTokenRepository;
@@ -63,9 +64,13 @@ class LoginController extends Controller
         }
 
 
-        // 获取 token 并保存 token 到 redis
-        $token = $accessTokenRepository->getAccessToken($request->all());
 
+        try{
+            // 获取 token 并保存 token 到 redis
+            $token = $accessTokenRepository->getAccessToken($request->all());
+        }catch(RequestException $exception){
+            return redirect('login')->with('danger', '错误');
+        }
         // 添加微信信息
         $wechatRepository->insertWechat($user_id);
 

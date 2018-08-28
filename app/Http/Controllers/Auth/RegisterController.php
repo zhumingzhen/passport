@@ -84,7 +84,7 @@ class RegisterController extends Controller
     {
         $invite_user_id = session('invite_user_id');
         if ($invite_user_id){
-        dd(session($invite_user_id));
+        dd($invite_user_id);
         }else{
             dd(111111);
         }

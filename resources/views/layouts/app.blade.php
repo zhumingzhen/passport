@@ -38,7 +38,7 @@
                     </button>
 
                     <!-- Branding Image -->
-                    <a class="navbar-brand" href="{{ url('/') }}">
+                    <a class="navbar-brand" href="javascript:void(0);">
                         {{ config('app.name', 'Laravel') }}
                     </a>
                 </div>

@@ -76,7 +76,7 @@ class WechatController extends Controller
          */
         if ( !$isWechat ) {
             // 如果没有当前 openid 信息，则跳转到手机号登录页面
-            return view('auth.login',compact('invite_user_id'));
+            return view('auth.login');
 
         }else {
             // 如果已存在当前 openid 信息，则跳转到来源页面  url()->previous()

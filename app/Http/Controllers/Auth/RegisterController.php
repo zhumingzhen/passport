@@ -82,6 +82,12 @@ class RegisterController extends Controller
      */
     public function register(Request $request, WechatRepository $wechatRepository, AccessTokenRepository $accessTokenRepository)
     {
+        $invite_user_id = session('invite_user_id');
+        if ($invite_user_id){
+        dd(session($invite_user_id));
+        }else{
+            dd(111111);
+        }
         $this->validator($request->all())->validate();
 
 
@@ -98,11 +104,12 @@ class RegisterController extends Controller
 
         event(new Registered($user = $this->create($request->all())));
 
+        // 获取 token 并保存 token 到 redis
+        $token = $accessTokenRepository->getAccessToken($request->all());
+
         // 添加微信信息
         $wechatRepository->insertWechat($user->id);
 
-        // 获取 token 并保存 token 到 redis
-        $token = $accessTokenRepository->getAccessToken($request->all());
         // 跳回 redirect
         // 获取跳转参数
         $code = session('redirect_code');

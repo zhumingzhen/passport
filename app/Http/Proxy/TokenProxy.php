@@ -27,7 +27,7 @@ class TokenProxy
 
     public function proxy($grantType, array $data = [])
     {
-//        try {
+        try {
             // 请求地址
             $url = request()->root() . '/oauth/token';
 
@@ -45,10 +45,9 @@ class TokenProxy
         $response = $this->http->post($url, [
                 'form_params' => $data
             ]);
-//
-//        } catch (RequestException $exception) {
-//            throw new UnauthorizedException('请求失败，服务器错误');
-//        }
+        } catch (RequestException $exception) {
+            throw new UnauthorizedException('请求失败，服务器错误');
+        }
 
         if ($response->getStatusCode() != 401){
             $token = json_decode((string) $response->getBody(), true);

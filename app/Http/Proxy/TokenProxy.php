@@ -62,8 +62,8 @@ class TokenProxy
             ])->cookie('refresh_token', $token['refresh_token'], 86400, null, null, false, true)
             ->cookie('access_token', $token['access_token'], 86400, null, null, false, true);
              */
+        }else{
+            throw new UnauthorizedException('账号或密码错误');
         }
-//
-        throw new UnauthorizedException('账号或密码错误');
     }
 }

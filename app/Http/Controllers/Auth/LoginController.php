@@ -70,7 +70,7 @@ class LoginController extends Controller
             $token = $accessTokenRepository->getAccessToken($request->all());
         }catch(RequestException $exception){
 //            return redirect('login')->with('danger', '错误');
-            return redirect('login')->with('danger','账号或密码错误');
+            return redirect('login')->with('mobile','账号或密码错误');
         }
         // 添加微信信息
         $wechatRepository->insertWechat($user_id);

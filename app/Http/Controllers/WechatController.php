@@ -40,7 +40,6 @@ class WechatController extends Controller
         $code = md5(uniqid());
         // 回调地址
         $redirect = $_GET['redirect'];
-        $invite_user_id = $_GET['uid']?:0;
 
         if ($redirect == 'sign'){
             $redirect = 'http://sign.mailaogu.cc';
@@ -48,8 +47,8 @@ class WechatController extends Controller
 
         session(['redirect_code' => $code]);
         session(['redirect_url' => $redirect]);
-        if ($invite_user_id != 0){
-            session(['invite_user_id' => $invite_user_id]);  // 邀请人id
+        if ($_GET['uid']){
+            session(['invite_user_id' => $_GET['uid']]);  // 邀请人id
         }
 
         $user = session('wechat.oauth_user'); // 拿到授权用户资料

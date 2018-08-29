@@ -47,7 +47,7 @@ class WechatController extends Controller
 
         session(['redirect_code' => $code]);
         session(['redirect_url' => $redirect]);
-        if ($_GET['uid']){
+        if (isset($_GET['uid'])){
             session(['invite_user_id' => $_GET['uid']]);  // 邀请人id
         }
 

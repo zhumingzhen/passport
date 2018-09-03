@@ -105,7 +105,7 @@ class WechatController extends Controller
                     'access_token' => $accessToken
                 ],
             ];
-            Redis::del($code);
+//            Redis::del($code);
         }else{
 //            return redirect('http://passport.mailaogu.cc/user?redirect=sign');
             $res = [

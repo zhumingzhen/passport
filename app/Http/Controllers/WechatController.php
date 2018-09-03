@@ -107,11 +107,11 @@ class WechatController extends Controller
             ];
             Redis::del($code);
         }else{
-            return redirect('/user?redirect=sign');
-//            $res = [
-//                'code'=> 64000,
-//                'msg'=> 'token获取失败,code已使用',
-//            ];
+//            return redirect('/user?redirect=sign');
+            $res = [
+                'code'=> 64000,
+                'msg'=> 'token获取失败,code已使用',
+            ];
         }
 
         return $res;

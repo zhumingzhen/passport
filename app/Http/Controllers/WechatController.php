@@ -107,7 +107,7 @@ class WechatController extends Controller
             ];
 //            Redis::del($code);
         }else{
-//            return redirect('http://passport.mailaogu.cc/user?redirect=sign');
+            return redirect('/user?redirect=sign');
             $res = [
                 'code'=> 64000,
                 'msg'=> 'token获取失败,code已使用',

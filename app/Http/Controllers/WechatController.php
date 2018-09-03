@@ -110,7 +110,7 @@ class WechatController extends Controller
 //            return redirect('http://passport.mailaogu.cc/user?redirect=sign');
             $res = [
                 'code'=> 64000,
-                'msg'=> 'token获取失败',
+                'msg'=> 'token获取失败,code已使用',
             ];
         }
 

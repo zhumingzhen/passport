@@ -105,13 +105,13 @@ class WechatController extends Controller
                     'access_token' => $accessToken
                 ],
             ];
-//            Redis::del($code);
+            Redis::del($code);
         }else{
             return redirect('/user?redirect=sign');
-            $res = [
-                'code'=> 64000,
-                'msg'=> 'token获取失败,code已使用',
-            ];
+//            $res = [
+//                'code'=> 64000,
+//                'msg'=> 'token获取失败,code已使用',
+//            ];
         }
 
         return $res;

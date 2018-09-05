@@ -105,7 +105,7 @@ class WechatController extends Controller
                     'access_token' => $accessToken
                 ],
             ];
-//            Redis::del($code);
+            Redis::del($code);
         }else{
 //            return redirect('/user?redirect=sign');
             $res = [

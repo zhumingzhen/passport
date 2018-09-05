@@ -8,6 +8,7 @@ use App\Repositories\AccessTokenRepository;
 use App\Repositories\WechatRepository;
 use App\User;
 use App\Http\Controllers\Controller;
+use App\UserInvite;
 use Illuminate\Support\Facades\Redis;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Auth\Events\Registered;
@@ -107,6 +108,8 @@ class RegisterController extends Controller
 
         // 邀请用户 给 邀请人送币
         $invite_user_id = session('invite_user_id');
+
+
         if ($invite_user_id){
             $sexc = rand(5,10);
             CenterAward::where('user_id',$invite_user_id)->increment('sexc',$sexc);
@@ -115,6 +118,11 @@ class RegisterController extends Controller
                 'sexc' => $sexc,
                 'continuous' => 3,
                 'gain' => 1
+            ]);
+
+            UserInvite::create([
+                'user_id' => $user->id,
+                'invite_id' => $invite_user_id,
             ]);
         }
 

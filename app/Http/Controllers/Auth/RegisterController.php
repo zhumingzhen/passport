@@ -9,6 +9,7 @@ use App\Repositories\WechatRepository;
 use App\User;
 use App\Http\Controllers\Controller;
 use App\UserInvite;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Redis;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Auth\Events\Registered;
@@ -109,9 +110,10 @@ class RegisterController extends Controller
         // 邀请用户 给 邀请人送币
         $invite_user_id = session('invite_user_id');
 
-
-        if ($invite_user_id){
-            $sexc = rand(5,10);
+        $today_sexc  = Redis::get('invite_'.$invite_user_id)?:0;
+        if ($invite_user_id && $today_sexc < 20){
+//            $sexc = rand(5,10);
+            $sexc = 5;
             CenterAward::where('user_id',$invite_user_id)->increment('sexc',$sexc);
             CenterSexcDetail::create([
                 'user_id' => $invite_user_id,
@@ -124,6 +126,14 @@ class RegisterController extends Controller
                 'user_id' => $user->id,
                 'invite_id' => $invite_user_id,
             ]);
+
+
+            $tom = Carbon::tomorrow()->timestamp;
+            $now = Carbon::now()->timestamp;
+            $expire = $tom - $now;
+            $today_sexc += $sexc;
+            Redis::setex('invite_'.$invite_user_id, $expire, $today_sexc);
+//            Redis::expire($code, 30000);
         }
 
         // 跳回 redirect

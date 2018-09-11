@@ -10,6 +10,25 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
+
+Route::get('/aaa', function () {
+    $today_sexc = \Illuminate\Support\Facades\Redis::get('invite_2')?:0;
+
+    $tom = \Carbon\Carbon::tomorrow()->timestamp;
+    $now = \Carbon\Carbon::now()->timestamp;
+    $expire = $tom - $now;
+    $expire = 20;
+
+    if ($today_sexc < 20){
+        $sexc = 5;
+        $today_sexc += $sexc;
+        \Illuminate\Support\Facades\Redis::setex('invite_2', $expire, $today_sexc);
+    }
+
+
+    dd($today_sexc);
+});
+
 // 短信
 Route::post('/registerSms', 'Common\SmsController@registerSms')->name('registerSms');
 

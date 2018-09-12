@@ -72,9 +72,12 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
+        $userWechat = session('wechat.oauth_user'); // 拿到授权用户资料
+        $original = $userWechat['default']['original'];
+
         return User::create([
             'mobile' => $data['mobile'],
-            'username' =>  substr_replace($data['mobile'],'****',3,4),
+            'username' =>  $original['nickname'],
             'password' => bcrypt($data['password']),
         ]);
     }

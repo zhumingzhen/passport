@@ -89,6 +89,11 @@ class RegisterController extends Controller
      */
     public function register(Request $request, WechatRepository $wechatRepository, AccessTokenRepository $accessTokenRepository)
     {
+        // 邀请用户 给 邀请人送币
+        $invite_user_id = session('invite_user_id');
+
+        dd($invite_user_id);
+        
         $this->validator($request->all())->validate();
 
         $smsCode = Redis::get('smsCode_'.$request['mobile']);

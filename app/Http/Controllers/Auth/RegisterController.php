@@ -115,6 +115,11 @@ class RegisterController extends Controller
 
         $today_sexc  = Redis::get('invite_'.$invite_user_id)?:0;
 
+        UserInvite::create([
+            'user_id' => $user->id,
+            'invite_id' => $invite_user_id,
+        ]);
+
         if ($invite_user_id && $today_sexc < 20){
 //            $sexc = rand(5,10);
             $sexc = 5;
@@ -125,12 +130,6 @@ class RegisterController extends Controller
                 'continuous' => 3,
                 'gain' => 1
             ]);
-
-            UserInvite::create([
-                'user_id' => $user->id,
-                'invite_id' => $invite_user_id,
-            ]);
-
 
             $tom = Carbon::tomorrow()->timestamp;
             $now = Carbon::now()->timestamp;

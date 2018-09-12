@@ -113,6 +113,8 @@ class RegisterController extends Controller
         // 邀请用户 给 邀请人送币
         $invite_user_id = session('invite_user_id');
 
+        dd($invite_user_id);
+
         $today_sexc  = Redis::get('invite_'.$invite_user_id)?:0;
         if ($invite_user_id && $today_sexc < 20){
 //            $sexc = rand(5,10);

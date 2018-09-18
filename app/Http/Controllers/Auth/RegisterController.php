@@ -127,7 +127,7 @@ class RegisterController extends Controller
             CenterSexcDetail::create([
                 'user_id' => $invite_user_id,
                 'sexc' => $sexc,
-                'continuous' => 3,
+                'continuous' => '邀请好友奖励',
                 'gain' => 1
             ]);
 
